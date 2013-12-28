@@ -45,6 +45,15 @@ else {
 		die("Error: No results from Semantic MediaWiki.");
 	}
 
+	if (count($results) > 1) {
+		print "Multiple pages found for AppID. Which do you request?<br/>";
+		for ($i = 0; $i < count($results); ++$i) {
+			print "<a href=" . current($results)["fullurl"] . ">" . current($results)["fulltext"] . "</a><br/>";
+			next($results);
+		}
+		die();
+	}
+
 	// Get first results url
 	$first_result = reset($results);
 	$article_url = $first_result["fullurl"];
