@@ -5,7 +5,7 @@
 
 // Config
 $config = array(
-	'api_url' => 'http://pcgamingwiki.com/wiki/Special:Ask/-5B-5BSteam-20AppID::%APPID%-5D-5D/format%3Djson', // Format of URL to get APPID data as json.
+	'api_url' => 'http://pcgamingwiki.com/wiki/Special:Ask/-5B-5BWineHQ-20AppID::%APPID%-5D-5D/format%3Djson', // Format of URL to get APPID data as json.
 );
 
 
@@ -40,7 +40,7 @@ else {
 	}
 
 	if (count($results) > 1) {
-		print "Multiple pages found for AppID. Which do you request?<br/>";
+		print "Multiple pages found for AppID. Which did you request?<br/>";
 		for ($i = 0; $i < count($results); ++$i) {
 			print "<a href=" . current($results)["fullurl"] . ">" . current($results)["fulltext"] . "</a><br/>";
 			next($results);
