@@ -156,7 +156,7 @@
 					if ( count( $results ) != 0 )
 					{
 						print '<p>No page for the game ' . $results['name'] . ' exists, would you like to create it?</p>';
-						print '<a href="http://pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&action=edit"><div class="create-page-button">Create Page</div></a>';
+						print '<a href="http://pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
 					}
 					else
 					{
