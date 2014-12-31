@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<title>PCGamingWiki</title>
-		<meta charset="utf-8"> 
+		<meta charset="utf-8">
+		<meta name=viewport content="width=device-width, initial-scale=0.75">
 		<style type="text/css">
 			body, html {
 				padding: 50px 10px;
@@ -27,6 +28,11 @@
 
 			.nav {
 				margin-top: 75px;
+			}
+
+			.referrer {
+				margin-top: 200px;
+				font-size: 12px;
 			}
 
 			input[type=search] {
@@ -99,83 +105,83 @@
 		</style>
 	</head>
 	<body>
-	<div class="content">
-		<?php
-		// Config
-		$config = array(
-			'api_pcgw' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::%APPID%&format=json',
-			'api_steam' => 'http://store.steampowered.com/api/appdetails/?appids=%APPID%&filters=basic',
-		);
+		<div class="content">
+			<?php
+			// Config
+			$config = array(
+				'api_pcgw' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::%APPID%&format=json',
+				'api_steam' => 'http://store.steampowered.com/api/appdetails/?appids=%APPID%&filters=basic',
+			);
 
-		// Main code
-		if ( !isset( $_GET['appid'] ) )
-		{
-			print "<p>Error: No appid provided.</p>";
-		}
-		else
-		{
-			$appid = $_GET['appid'];
-
-			// Construct api_url for appid
-			$url = str_replace( '%APPID%', $appid, $config['api_pcgw'] );
-
-			// Fetch data
-			$hcurl = curl_init( $url );
-			curl_setopt( $hcurl, CURLOPT_RETURNTRANSFER, 1 );
-			curl_setopt( $hcurl, CURLOPT_TIMEOUT, 5 );
-			curl_setopt( $hcurl, CURLOPT_CONNECTTIMEOUT, 5 );
-
-			$data = curl_exec( $hcurl );
-			curl_close( $hcurl );
-
-			// Read data as JSON
-			$json = json_decode( $data, true );
-			if ( !$json )
+			// Main code
+			if ( !isset( $_GET['appid'] ) || $_GET['appid'] == "" )
 			{
-				print "Error: Received invalid data from Semantic MediaWiki.";
+				print "<p>Error: No appid provided.</p>";
 			}
 			else
 			{
-				$results = $json['query']['results'];
+				$appid = $_GET['appid'];
 
-				if ( count( $results ) == 0 )
+				// Construct api_url for appid
+				$url = str_replace( '%APPID%', $appid, $config['api_pcgw'] );
+
+				// Fetch data
+				$hcurl = curl_init( $url );
+				curl_setopt( $hcurl, CURLOPT_RETURNTRANSFER, 1 );
+				curl_setopt( $hcurl, CURLOPT_TIMEOUT, 5 );
+				curl_setopt( $hcurl, CURLOPT_CONNECTTIMEOUT, 5 );
+
+				$data = curl_exec( $hcurl );
+				curl_close( $hcurl );
+
+				// Read data as JSON
+				$json = json_decode( $data, true );
+				if ( !$json )
 				{
-					$url = str_replace( '%APPID%', $appid, $config['api_steam'] );
-
-					// Fetch data
-					$hcurl = curl_init( $url );
-					curl_setopt( $hcurl, CURLOPT_RETURNTRANSFER, 1 );
-					curl_setopt( $hcurl, CURLOPT_TIMEOUT, 5 );
-					curl_setopt( $hcurl, CURLOPT_CONNECTTIMEOUT, 5 );
-
-					$data = curl_exec( $hcurl );
-					curl_close( $hcurl );
-					$json = json_decode( $data, true );
-					
-					$results = $json[$appid]['data'];
-					if ( count( $results ) != 0 )
-					{
-						print '<p>No page for the game ' . $results['name'] . ' exists, would you like to create it?</p>';
-						print '<a href="http://pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
-					}
-					else
-					{
-						print "No such AppID.";
-					}
+					print "Error: Received invalid data from Semantic MediaWiki.";
 				}
-				else if ( count( $results ) > 1 )
+				else
 				{
-					print "<p>Multiple pages found for AppID. Which did you request?</p>";
-					for ($i = 0; $i < count( $results ); ++$i)
+					$results = $json['query']['results'];
+
+					if ( count( $results ) == 0 )
 					{
-						print "<p><a href=" . current( $results )['fullurl'] . ">" . current( $results )['fulltext'] . "</a></p>";
-						next( $results );
+						$url = str_replace( '%APPID%', $appid, $config['api_steam'] );
+
+						// Fetch data
+						$hcurl = curl_init( $url );
+						curl_setopt( $hcurl, CURLOPT_RETURNTRANSFER, 1 );
+						curl_setopt( $hcurl, CURLOPT_TIMEOUT, 5 );
+						curl_setopt( $hcurl, CURLOPT_CONNECTTIMEOUT, 5 );
+
+						$data = curl_exec( $hcurl );
+						curl_close( $hcurl );
+						$json = json_decode( $data, true );
+						
+						$results = $json[$appid]['data'];
+						if ( count( $results ) != 0 )
+						{
+							print '<p>No page for ' . $results['name'] . ' exists, would you like to create it?</p>';
+							print '<a href="http://pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
+						}
+						else
+						{
+							print "No such AppID.";
+						}
+					}
+					else if ( count( $results ) > 1 )
+					{
+						print "<p>Multiple pages found for AppID. Which did you request?</p>";
+						for ($i = 0; $i < count( $results ); ++$i)
+						{
+							print "<p><a href=" . current( $results )['fullurl'] . ">" . current( $results )['fulltext'] . "</a></p>";
+							next( $results );
+						}
 					}
 				}
 			}
-		}
-		?>
-	</div>
+			?>
+		</div>
 
 		<div class="nav">
 			<form role="search" action="http://pcgamingwiki.com/w/index.php" method="get">
@@ -187,6 +193,19 @@
 				</button>
 			</form>
 		</div>
+
+		<?php
+			if ( isset( $_GET['referrer'] ) )
+			{
+				$referrer = $_GET['referrer'];
+				if ( filter_var( $referrer, FILTER_VALIDATE_URL) != false )
+				{
+					print '<div class="referrer">';
+					print '<p>Prefer to go back? Click <a href="' . $referrer . '">here</a>.</p>';
+					print '</div>';
+				}
+			}
+		?>
 
 		<svg height="0" width="0" viewBox="0 0 100 100" >
 			<g id="search-icon">

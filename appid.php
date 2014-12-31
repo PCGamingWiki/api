@@ -9,7 +9,7 @@ $config = array(
 );
 
 // Main code
-if ( !isset( $_GET['appid'] ) )
+if ( !isset( $_GET['appid'] ) || $_GET['appid'] == "" )
 {
 	die( "Error: No appid provided." );
 }
@@ -40,7 +40,7 @@ else
 
 	if ( count($results) != 1 )
 	{
-		header( 'Location: http://pcgamingwiki.com/api/user.php?appid=' . $appid );
+		header( 'Location: http://pcgamingwiki.com/api/user.php?appid=' . $appid . '&referrer=' . $_SERVER['HTTP_REFERER'] );
 		die();
 	}
 
