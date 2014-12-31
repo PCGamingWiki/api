@@ -5,19 +5,20 @@
 
 // Config
 $config = array(
-	'api_url' => 'http://pcgamingwiki.com/wiki/Special:Ask/-5B-5BSteam-20AppID::%APPID%-5D-5D/format%3Djson', // Format of URL to get APPID data as json.
+	'api_pcgw' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::%APPID%&format=json',
 );
 
-
 // Main code
-if (!isset($_GET['appid'])) {
-	die("Error: No appid provided.");
+if ( !isset( $_GET['appid'] ) )
+{
+	die( "Error: No appid provided." );
 }
-else {
+else
+{
 	$appid = $_GET['appid'];
 
 	// Construct api_url for appid
-	$url = str_replace('%APPID%', $appid, $config['api_url']);
+	$url = str_replace( '%APPID%', $appid, $config['api_pcgw'] );
 
 	// Fetch data
 	$hcurl = curl_init( $url );
@@ -30,29 +31,24 @@ else {
 
 	// Read data as JSON
 	$json = json_decode( $data, true );
-	if (!$json) {
-		die("Error: Received invalid data from Semantic MediaWiki.");
+	if ( !$json )
+	{
+		die( "Error: Received invalid data from MediaWiki." );
 	}
 
-	$results = $json['results'];
-	if (count($results) == 0) {
-		die("Error: No results from Semantic MediaWiki.");
-	}
+	$results = $json['query']['results'];
 
-	if (count($results) > 1) {
-		print "Multiple pages found for AppID. Which do you request?<br/>";
-		for ($i = 0; $i < count($results); ++$i) {
-			print "<a href=" . current($results)["fullurl"] . ">" . current($results)["fulltext"] . "</a><br/>";
-			next($results);
-		}
+	if ( count($results) != 1 )
+	{
+		header( 'Location: http://pcgamingwiki.com/api/user.php?appid=' . $appid );
 		die();
 	}
 
 	// Get first results url
-	$first_result = reset($results);
+	$first_result = reset( $results );
 	$article_url = $first_result["fullurl"];
 
 	// Redirect
-	header('Location: ' . $article_url);
+	header( 'Location: ' . $article_url );
 	die();
 }
