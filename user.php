@@ -4,6 +4,7 @@
 		<title>PCGamingWiki</title>
 		<meta charset="utf-8">
 		<meta name=viewport content="width=device-width, initial-scale=0.75">
+		<link rel="shortcut icon" href="/images/WikiFavicon.png" />
 		<style type="text/css">
 			body, html {
 				padding: 50px 10px;
