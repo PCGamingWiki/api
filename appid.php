@@ -106,7 +106,7 @@ if ( count( $results ) == 1 )
 		</div>
 
 		<div class="referrer">
-			<p>Prefer to go back? Click <a href="" onClick="window.history.back()">here</a>.</p>
+			<p>Prefer to go back? Click <a href="<?php print $_SERVER['HTTP_REFERER']; ?>">here</a>.</p>
 		</div>
 
 		<svg height="0" width="0" viewBox="0 0 100 100" >
