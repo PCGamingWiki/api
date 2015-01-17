@@ -1,6 +1,7 @@
 <?php
 $config = array(
-	'api_pcgw' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20page::%APPID%&format=json',
+	'api_pcgw_store' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20page::%APPID%&format=json',
+	'api_pcgw_forum' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20forum::%APPID%&format=json',
 );
 
 if ( !isset( $_GET['page'] ) || $_GET['page'] == "" )
@@ -12,7 +13,42 @@ else
 	$appid = $_GET['page'];
 
 	// Construct api_url for appid
-	$url = str_replace( '%APPID%', $appid, $config['api_pcgw'] );
+	$url = str_replace( '%APPID%', $appid, $config['api_pcgw_store'] );
+
+	// Fetch data
+	$hcurl = curl_init( $url );
+	curl_setopt( $hcurl, CURLOPT_RETURNTRANSFER, 1 );
+	curl_setopt( $hcurl, CURLOPT_TIMEOUT, 5 );
+	curl_setopt( $hcurl, CURLOPT_CONNECTTIMEOUT, 5 );
+
+	$data = curl_exec( $hcurl );
+	curl_close( $hcurl );
+
+	// Read data as JSON
+	$json = json_decode( $data, true );
+
+	if ( !$json )
+	{
+		die( "Error: Received invalid data from MediaWiki." );
+	}
+
+	$results = $json['query']['results'];
+
+	// Get first results url
+	$first_result = reset( $results );
+	$article_url = $first_result["fullurl"];
+}
+
+if ( !isset( $_GET['forum'] ) || $_GET['forum'] == "" )
+{
+	die( "Error: No appid provided." );
+}
+else
+{
+	$appid = $_GET['forum'];
+
+	// Construct api_url for appid
+	$url = str_replace( '%APPID%', $appid, $config['api_pcgw_store'] );
 
 	// Fetch data
 	$hcurl = curl_init( $url );
@@ -64,7 +100,7 @@ if ( count( $results ) == 1 )
 			}
 			else if ( count( $results ) > 1 )
 			{
-				print "<p>Multiple pages found for store page. Which did you request?</p>";
+				print "<p>Multiple pages found for value. Which would you like to see?</p>";
 				for ($i = 0; $i < count( $results ); ++$i)
 				{
 					print "<p><a href=" . current( $results )['fullurl'] . ">" . current( $results )['fulltext'] . "</a></p>";
@@ -86,7 +122,7 @@ if ( count( $results ) == 1 )
 		</div>
 
 		<div class="referrer">
-			<p>Prefer to go back? Click <a href="window.history.back()">here</a>.</p>
+			<p>Prefer to go back? Click <a href="<?php print $_SERVER['HTTP_REFERER']; ?>">here</a>.</p>
 		</div>
 
 		<svg height="0" width="0" viewBox="0 0 100 100" >
