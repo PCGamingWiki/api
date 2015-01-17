@@ -4,11 +4,11 @@ $config = array(
 	'api_pcgw_forum' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20forum::%APPID%&format=json',
 );
 
-if ( !isset( $_GET['page'] ) || $_GET['page'] == "" )
+if ( !isset( $_GET['page'] ) || $_GET['page'] == "" || !isset( $_GET['forum'] ) || $_GET['forum'] == "" )
 {
 	die( "Error: No appid provided." );
 }
-else
+else if ( isset( $_GET['page'] ) || $_GET['page'] != "" )
 {
 	$appid = $_GET['page'];
 
@@ -38,12 +38,7 @@ else
 	$first_result = reset( $results );
 	$article_url = $first_result["fullurl"];
 }
-
-if ( !isset( $_GET['forum'] ) || $_GET['forum'] == "" )
-{
-	die( "Error: No appid provided." );
-}
-else
+else if ( isset( $_GET['forum'] ) || $_GET['forum'] != "" )
 {
 	$appid = $_GET['forum'];
 
