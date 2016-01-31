@@ -117,7 +117,7 @@ if ( count( $results ) == 1 )
 		</div>
 
 		<div class="referrer">
-			<p>Prefer to go back? Click <a href="<?php print $_SERVER['HTTP_REFERER']; ?>">here</a>.</p>
+			<p>Prefer to go back? Click <a href="<?php echo htmlspecialchars( $_SERVER['HTTP_REFERER'], ENT_QUOTES | ENT_HTML5, 'UTF-8' ); ?>">here</a>.</p>
 		</div>
 
 		<svg height="0" width="0" viewBox="0 0 100 100" >
