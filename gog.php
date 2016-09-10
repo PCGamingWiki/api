@@ -1,7 +1,10 @@
 <?php
 $config = array(
-	'api_pcgw_store' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20page::%APPID%&format=json',
-	'api_pcgw_forum' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20forum::%APPID%&format=json',
+	'pcgw_api_gogstore' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20page::%APPID%&format=json',
+	'pcgw_api_gogforum' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20forum::%APPID%&format=json',
+	'pcgw_api_winehq' => 'http://pcgamingwiki.com/wiki/Special:Ask/-5B-5BWineHQ-20AppID::%APPID%-5D-5D/format%3Djson',
+	'pcgw_api_steamid' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::%APPID%&format=json',
+	'steam_api' => 'http://store.steampowered.com/api/appdetails/?appids=%APPID%&filters=basic',
 );
 
 if ( ( !isset( $_GET['page'] ) || $_GET['page'] == "" ) && ( !isset( $_GET['forum'] ) || $_GET['forum'] == "" ) )
