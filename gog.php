@@ -1,7 +1,7 @@
 <?php
 $config = array(
-	'api_pcgw_store' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20page::%APPID%&format=json',
-	'api_pcgw_forum' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20forum::%APPID%&format=json',
+	'api_pcgw_store' => 'https://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20page::%APPID%&format=json',
+	'api_pcgw_forum' => 'https://pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom%20forum::%APPID%&format=json',
 );
 
 if ( ( !isset( $_GET['page'] ) || $_GET['page'] == "" ) && ( !isset( $_GET['forum'] ) || $_GET['forum'] == "" ) )

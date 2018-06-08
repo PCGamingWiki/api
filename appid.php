@@ -1,7 +1,7 @@
 <?php
 $config = array(
-	'api_pcgw' => 'http://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::%APPID%&format=json',
-	'api_steam' => 'http://store.steampowered.com/api/appdetails/?appids=%APPID%&filters=basic',
+	'api_pcgw' => 'https://pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam%20AppID::%APPID%&format=json',
+	'api_steam' => 'https://store.steampowered.com/api/appdetails/?appids=%APPID%&filters=basic',
 );
 
 if ( !isset( $_GET['appid'] ) || $_GET['appid'] == "" )
@@ -28,7 +28,7 @@ else
 	$json = json_decode( $data, true );
 	if ( !$json )
 	{
-		die( "Error: Received invalid data from MediaWiki." );
+		die( "Error: Received invalid data from MediaWiki. " );
 	}
 
 	$results = $json['query']['results'];
@@ -75,7 +75,7 @@ if ( count( $results ) == 1 )
 				if ( count( $results ) != 0 )
 				{
 					print '<p>No page for ' . $results['name'] . ' exists, would you like to create it?</p>';
-					print '<a href="http://pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
+					print '<a href="//pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
 				}
 				else
 				{
@@ -95,7 +95,7 @@ if ( count( $results ) == 1 )
 		</div>
 
 		<div class="nav">
-			<form role="search" action="http://pcgamingwiki.com/w/index.php" method="get">
+			<form role="search" action="//pcgamingwiki.com/w/index.php" method="get">
 				<input type="search" name="search" placeholder="Search PCGamingWiki">
 				<button type="submit">
 					<svg class="icon" height="20px" width="20px" viewBox="0 0 100 100" >
