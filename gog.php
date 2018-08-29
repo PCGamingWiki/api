@@ -20,6 +20,7 @@ else if ( isset( $_GET['page'] ) || $_GET['page'] != "" )
 	curl_setopt( $hcurl, CURLOPT_RETURNTRANSFER, 1 );
 	curl_setopt( $hcurl, CURLOPT_TIMEOUT, 5 );
 	curl_setopt( $hcurl, CURLOPT_CONNECTTIMEOUT, 5 );
+	curl_setopt( $hcurl, CURLOPT_RESOLVE, array("pcgamingwiki.com:8080:127.0.0.1") );
 
 	$data = curl_exec( $hcurl );
 	curl_close( $hcurl );
@@ -50,6 +51,7 @@ else if ( isset( $_GET['forum'] ) || $_GET['forum'] != "" )
 	curl_setopt( $hcurl, CURLOPT_RETURNTRANSFER, 1 );
 	curl_setopt( $hcurl, CURLOPT_TIMEOUT, 5 );
 	curl_setopt( $hcurl, CURLOPT_CONNECTTIMEOUT, 5 );
+	curl_setopt( $hcurl, CURLOPT_RESOLVE, array("pcgamingwiki.com:8080:127.0.0.1") );
 
 	$data = curl_exec( $hcurl );
 	curl_close( $hcurl );
