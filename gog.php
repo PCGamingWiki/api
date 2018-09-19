@@ -93,7 +93,7 @@ if ( count( $results ) == 1 )
 			{
 				$title = $_GET['title'];
 				print '<p>No page for ' . $title . ' exists, would you like to create it?</p>';
-				print '<a href="http://pcgamingwiki.com/w/index.php?title=' . $title . '&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
+				print '<a href="http://pcgamingwiki.com/w/index.php?title=' . $title . '&amp;action=edit&amp;redlink=1"><div class="create-page-button">Create Page</div></a>';
 			}
 			else if ( count( $results ) > 1 )
 			{
