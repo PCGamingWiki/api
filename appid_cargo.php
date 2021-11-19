@@ -77,7 +77,7 @@ if ( count( $results ) == 1 )
 				if ( count( $results ) != 0 )
 				{
 					print '<p>No page for ' . $results['name'] . ' exists, would you like to create it?</p>';
-					print '<a href="//pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
+					print '<a href="//pcgamingwiki.com/w/index.php?title=' . $results['name'] . '&amp;redlink=1&amp;action=edit"><div class="create-page-button">Create Page</div></a>';
 				}
 				else
 				{
